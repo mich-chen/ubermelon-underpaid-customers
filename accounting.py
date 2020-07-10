@@ -1,4 +1,28 @@
+""" Checks if customers underpaid for melons """
+# great example file to practice Classes
+
+# need to also write a function to idenitfy any new customers
+# need to write function to calculate expected cost
+# only Sean and Ashley are the only customers who didn't pay correctly
+
+def calculate_expected_cost(melon_cost, melon_count):
+    """ calculates expected cost based on number of melons customer bought"""
+
+    return melon_cost + melon_count
+
+
+def check_order(customer_name, expected_cost, customer_paid):
+    """ check if customer paid expected amount and prints statement if no """
+
+    if expected_cost != customer_paid:
+        print(f"{customer_name} paid ${customer_paid:.2f},",
+          f"expected ${expected_cost:.2f}"
+          )
+
+
 melon_cost = 1.00
+
+
 
 customer1_name = "Joe"
 customer1_melons = 5
