@@ -19,6 +19,8 @@ def check_order(customer_name, expected_cost, customer_paid):
           f"expected ${expected_cost:.2f}"
           )
 
+        
+
 
 melon_cost = 1.00
 
