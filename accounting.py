@@ -5,83 +5,61 @@
 # need to write function to calculate expected cost
 # only Sean and Ashley are the only customers who didn't pay correctly
 
+melon_cost = 1.00
+
+def lines_into_list(line):
+    """ takes file with lines and strips, and splits to return a list of item words """
+
+    words = line.rstrip().split('|')
+    return words
+
+
 def calculate_expected_cost(melon_cost, melon_count):
     """ calculates expected cost based on number of melons customer bought"""
 
     return melon_cost + melon_count
 
 
+def convert_to_floats(str_lst):
+    """ takes list of strings and converts them into floats """
+
+    float_order = []
+    for string in str_lst:
+        float_order.append(float(string))
+
+    return float_order
+
+
 def check_order(customer_name, expected_cost, customer_paid):
     """ check if customer paid expected amount and prints statement if no """
 
     if expected_cost != customer_paid:
-        print(f"{customer_name} paid ${customer_paid:.2f},",
-          f"expected ${expected_cost:.2f}"
-          )
+        if expected_cost > customer_paid:
+            payment_status = "UNDERPAID"
+        else: 
+            payment_status = "OVERPAID"
 
-        
+        print(f"    {customer_name} {payment_status} for their melons!")
+
+    else:
+        pass
 
 
-melon_cost = 1.00
+def payment_info_and_status(report):
+    """ opens a text file, converts each line into a list of strings of each element in line"""
+
+    order_data = open(report)
+    for line in order_data:
+        order = lines_into_list(line) # function will split each line by '|' and get a list of strings
+        # each order has 4 strings
+        order[0:1] = []
+        name = order.pop(0)
+        order_as_floats = convert_to_floats(order)
+        melon_count, paid = order_as_floats
+        expected_cost = calculate_expected_cost(melon_cost, melon_count)
+        print(f"{name} paid ${paid:.2f}, expected ${expected_cost:.2f}")
+        check_order(name, expected_cost, paid)
+    order_data.close()
 
 
-
-customer1_name = "Joe"
-customer1_melons = 5
-customer1_paid = 5.00
-
-customer2_name = "Frank"
-customer2_melons = 6
-customer2_paid = 6.00
-
-customer3_name = "Sally"
-customer3_melons = 3
-customer3_paid = 3.00
-
-customer4_name = "Sean"
-customer4_melons = 9
-customer4_paid = 9.50
-
-customer5_name = "David"
-customer5_melons = 4
-customer5_paid = 4.00
-
-customer6_name = "Ashley"
-customer6_melons = 3
-customer6_paid = 2.00
-
-customer1_expected = customer1_melons * melon_cost
-if customer1_expected != customer1_paid:
-    print(f"{customer1_name} paid ${customer1_paid:.2f},",
-          f"expected ${customer1_expected:.2f}"
-          )
-
-customer2_expected = customer2_melons * melon_cost
-if customer2_expected != customer2_paid:
-    print(f"{customer2_name} paid ${customer2_paid:.2f},",
-          f"expected ${customer2_expected:.2f}"
-          )
-
-customer3_expected = customer3_melons * melon_cost
-if customer3_expected != customer3_paid:
-    print(f"{customer3_name} paid ${customer3_paid:.2f},",
-          f"expected ${customer3_expected:.2f}"
-          )
-
-customer4_expected = customer4_melons * melon_cost
-if customer4_expected != customer4_paid:
-    print(f"{customer4_name} paid ${customer4_paid:.2f},",
-          f"expected ${customer4_expected:.2f}"
-          )
-
-customer5_expected = customer5_melons * melon_cost
-if customer5_expected != customer5_paid:
-    print(f"{customer5_name} paid ${customer5_paid:.2f},",
-          f"expected ${customer5_expected:.2f}"
-          )
-
-customer6_expected = customer6_melons * melon_cost
-if customer6_expected != customer6_paid:
-    print(f"{customer6_name} paid ${customer6_paid:.2f},",
-          f"expected ${customer6_expected:.2f}"
-          )
+payment_info_and_status("customer-orders.txt")
